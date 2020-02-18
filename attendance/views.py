@@ -32,29 +32,32 @@ def attendance_page(request):
         else:
             return render(request, 'navigationguide.html', {'objectlist': objectlist, 'date': date})
     else:
-        if "new-class" in request.POST:
-            class_username = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6))
-            class_password = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6))
-            print(class_username)
-            print(class_password)
-            User.objects.create_user(class_username, '', class_password)
-            user = authenticate(username=class_username, password=class_password)
-            user_object = User.objects.get(username=class_username)
-            classroom_info = ClassroomLogin.objects.create(classroom_key=user_object, classroom_password=class_password)
-            classroom_info.save()
-            if user is not None:
-                login(request, user)
-                return redirect('/')
-        else:
-            name_field = request.POST.get('name')
-            gateways = netifaces.gateways()
-            default_gateway = gateways['default'][netifaces.AF_INET][0]
-            if default_gateway == SF_DEFAULT_GATEWAY:
-                attendance_list = AttendanceFormat.objects.create(classroom=request.user, name=name_field)
-                attendance_list.save()   
-                return render(request, 'navigationguide.html', {'date': date, 'status_message': "✓ Attendance submitted successfully!"})
-            else:
-                return render(request, 'navigationguide.html', {'date': date, 'status_message': "✗ You're not connected to the campus wifi and can't mark attendance!"})
+        name_field = request.POST.get('name')
+        attendance_list = AttendanceFormat.objects.create(classroom=request.user, name=name_field)
+        attendance_list.save()   
+        return render(request, 'navigationguide.html', {'date': date, 'status_message': "✓ Attendance submitted successfully!"})
+        # gateways = netifaces.gateways()
+        # default_gateway = gateways['default'][netifaces.AF_INET][0]
+        # if default_gateway == SF_DEFAULT_GATEWAY:
+        #     attendance_list = AttendanceFormat.objects.create(classroom=request.user, name=name_field)
+        #     attendance_list.save()   
+        #     return render(request, 'navigationguide.html', {'date': date, 'status_message': "✓ Attendance submitted successfully!"})
+        # else:
+        #     return render(request, 'navigationguide.html', {'date': date, 'status_message': "✗ You're not connected to the campus wifi and can't mark attendance!"})
+
+def create_class(request):
+    class_username = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6))
+    class_password = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6))
+    print(class_username)
+    print(class_password)
+    User.objects.create_user(class_username, '', class_password)
+    user = authenticate(username=class_username, password=class_password)
+    user_object = User.objects.get(username=class_username)
+    classroom_info = ClassroomLogin.objects.create(classroom_key=user_object, classroom_password=class_password)
+    classroom_info.save()
+    if user is not None:
+        login(request, user)
+        return redirect('/')
 
 @staff_member_required
 def upload_csv(request):

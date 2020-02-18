@@ -34,6 +34,7 @@ urlpatterns = [
     path('admin-home/', include(router.urls)),
     url(r'^$', views.attendance_page, name='home'),
     path('upload/', views.upload_csv, name='upload'),
+    path('create-class/', views.create_class, name='create'),
     path('download-attendance/', views.download_csv_page, name='download'),
     path('admin-home/attendance/<int:pk>/', views.AttendanceFormatDetail.as_view(), name='attendance-detail'),
     path('admin-home/users/<int:pk>/', views.UserDetail.as_view(), name='users-detail'),

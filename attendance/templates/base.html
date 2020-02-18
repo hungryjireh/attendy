@@ -36,6 +36,9 @@
             <ul class="nav navbar-nav mr-4">
             {% if user.is_staff %}
             <li class="nav-item">
+                <a class="nav-link " data-value="create" href="{% url 'create' %}">Create New Class</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link " data-value="upload" href="{% url 'upload' %}">Upload Nominal Roll</a>
             </li>
             <li class="nav-item">

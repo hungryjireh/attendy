@@ -1,0 +1,1 @@
+web: gunicorn attendy.wsgi --log-file -

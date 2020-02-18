@@ -1,0 +1,61 @@
+<!-- templates/friends_management.html -->
+{% extends 'base.html' %}
+
+{% block title %}Manage My Connections | SMESH{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="links">
+            <div class="friends-block">
+                <h2 class="links-header">Connections Requests</h2>
+                {% if received_connections %}
+                <form method="post">
+                    {% csrf_token %}
+                    <table class="centre-table">
+                        <tr>
+                            <th>Date</th>
+                            <th>From User</th>
+                            <th>Accept</th>
+                        </tr>
+                        {% for connection in received_connections %}
+                            <tr>
+                                <td>{{ connection.created }}</td>
+                                <td>{{ connection.from_user }}</td>
+                                <td><button value="{{ connection.from_user }}" name="from_user" type="submit">Accept</button></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </form>
+                {% else %}
+                    <p>You have no connection requests!</p>
+                {% endif %}
+            </div>
+            <div class="friends-block">
+                <h2 class="links-header">Pending Connection Requests</h2>
+                {% if sent_connections %}
+                    <table class="centre-table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Profile</th>
+                        </tr>
+                    {% for connection in sent_connections %}
+                        <tr>
+                            <td>{{ connection.to_user }}</td>
+                            <td><a href="/users/{{ connection.to_user }}/">Profile Link</a></td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                {% else %}                    
+                    <p>You have not sent any connection requests!</p>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <div class="links">
+            <div class="links-form">
+                <h2 class="links-header">Please log in!</h2>
+                <a href="{% url 'login' %}">Login</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

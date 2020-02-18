@@ -1,0 +1,32 @@
+<!-- templates/navigationguide.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Upload CSV | Attendy{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="navigationguide"> 
+        <h2 class="links-header">Download Attendance Form</h2>
+        <form method="POST" enctype="multipart/form-data" class="form-horizontal"> 
+            {% csrf_token %}
+            {% if query_list %}
+                <p>
+                   <label for="id_username">Classroom:</label>
+                   <select name="username" required id="id_username">
+                        <option value selected>----------</option>
+                        {% for element in query_list %}
+                        <option value="{{ element.username }}">{{ element.username }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+            {% endif %}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+{% else %}
+    <div class="navigationguide"> 
+        <h2 class="links-header">You don't have access to this page!</h2>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,37 @@
+<!-- templates/allfriends.html -->
+{% extends 'base.html' %}
+
+{% block title %}My Connections | SMESH{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="links">
+            <div class="links-form">
+                <h2 class="links-header">My Connections</h2>
+                {% if friends %}
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Profile</th>
+                        </tr>
+                    {% for friend in friends %}
+                        <tr>
+                            <td>{{ friend.2 }}</td>
+                            <td><a href="{{ friend.0 }}">Profile</a></td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                {% else %}
+                    <p>You have no connections yet!</p>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <div class="links">
+            <div class="links-form">
+                <h2 class="links-header">Please log in!</h2>
+                <a href="{% url 'login' %}">Login</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

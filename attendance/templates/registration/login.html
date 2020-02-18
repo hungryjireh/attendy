@@ -1,0 +1,127 @@
+<!-- <h2>Login</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Login</button>
+</form> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>S.MESH Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% load static %}
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{% static 'ikfwebapp/images/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/css/main.css' %}">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+       			<img src="{% static 'ikfwebapp/images/attendy.jpg' %}" alt="SMESH logo" id="logo">
+				<form class="login100-form validate-form flex-sb flex-w" method="post">
+          			{% csrf_token %}
+					<!-- <span class="login100-form-title p-b-32">
+						I Know First: Login
+					</span> -->
+
+					<span class="txt1 p-b-11">
+						Username
+					</span>
+					<div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
+						<!-- <input class="input100" type="text" name="username" > -->
+						<td class="input100" type="text" name="username">{{form.username}}</td>
+						<span class="focus-input100"></span>
+					</div>
+					
+					<span class="txt1 p-b-11">
+						Password
+					</span>
+					<div class="wrap-input100 validate-input m-b-12" data-validate = "Password is required">
+						<span class="btn-show-pass">
+							<i class="fa fa-eye"></i>
+            			</span>
+           				<td class="input100" type="password" name="pass">{{form.password}}</td>
+						<!-- <input class="input100" type="password" name="pass" > -->
+						<span class="focus-input100"></span>
+					</div>
+					
+					<div class="flex-sb-m w-full p-b-48">
+						<div class="contact100-form-checkbox">
+							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+							<label class="label-checkbox100" for="ckb1">
+								Remember me
+              				</label>
+						</div>
+
+						<div>
+							<a href="{% url 'password_reset' %}" class="txt3">
+								Forgot Password?
+							</a>
+            			</div>
+					</div>
+					  
+					{% if form.errors %}
+					<p>Your username and password didn't match. Please try again.</p>
+					{% endif %}
+          
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" value="login">
+							Login
+						</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="dropDownSelect1"></div>
+  
+  {% block footer_javascript %}
+  {% block footer_javascript_site %}
+<!--===============================================================================================-->
+	<script src="{% static 'ikfwebapp/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'ikfwebapp/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'ikfwebapp/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'ikfwebapp/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'ikfwebapp/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'ikfwebapp/vendor/daterangepicker/moment.min.js' %}"></script>
+	<script src="{% static 'ikfwebapp/vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'ikfwebapp/vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+  <script src="{% static 'ikfwebapp/js/main.js' %}"></script>
+  {% endblock footer_javascript_site %}
+  {% block footer_javascript_section %}{% endblock footer_javascript_section %}
+  {% block footer_javascript_page %}{% endblock footer_javascript_page %}
+  {% endblock footer_javascript %}
+
+</body>
+</html>

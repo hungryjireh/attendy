@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Home {% endblock title %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+    <!--===============================================================================================-->	
+        <link rel="icon" type="image/png" href="{% static 'ikfwebapp/images/icons/favicon.ico' %}"/>
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/animate/animate.css' %}">
+    <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/css-hamburgers/hamburgers.min.css' %}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/animsition/css/animsition.min.css' %}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/select2/select2.min.css' %}">
+    <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/vendor/daterangepicker/daterangepicker.css' %}">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="{% static 'ikfwebapp/css/base.css' %}">
+    <!--===============================================================================================-->
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <a href="/"><img src="{% static 'ikfwebapp/images/attendy.jpg' %}" alt="IKF logo" id="logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">  
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="nav navbar-nav mr-4">
+            {% if user.is_staff %}
+            <li class="nav-item">
+                <a class="nav-link " data-value="upload" href="{% url 'upload' %}">Upload Nominal Roll</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " data-value="download" href="{% url 'download' %}">Download Attendance</a>
+            </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link " data-value="logout" href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link " data-value="login" href="{% url 'login' %}">Login</a>
+            </li>
+            {% endif %}
+            </ul> 
+            </div>
+        </nav>
+        <!-- end of navbar -->
+    </head>
+    <body>
+        <div id="site-wrapper">
+            {% block content %}
+                if you see this, something is wrong!
+            {% endblock content %}
+        </div>
+
+        <!-- Footer -->
+        <footer class="page-footer font-small cyan darken-3 fixed-bottom" id="footer">
+            <section id="lab_social_icon_footer">
+                <div class="footer-copyright text-center py-3" id="footer-copy">© 2020 Copyright |
+                    <a href="">Attendy</a>
+                </div>
+            </section>
+            </footer>
+        <!-- end of Footer -->
+
+        {% block footer_javascript %}
+        {% block footer_javascript_site %}
+        <!--===============================================================================================-->
+            <script src="{% static 'ikfwebapp/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+        <!--===============================================================================================-->
+            <script src="{% static 'ikfwebapp/vendor/animsition/js/animsition.min.js' %}"></script>
+        <!--===============================================================================================-->
+            <script src="{% static 'ikfwebapp/vendor/bootstrap/js/popper.js' %}"></script>
+            <script src="{% static 'ikfwebapp/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+        <!--===============================================================================================-->
+            <script src="{% static 'ikfwebapp/vendor/select2/select2.min.js' %}"></script>
+        <!--===============================================================================================-->
+            <script src="{% static 'ikfwebapp/vendor/daterangepicker/moment.min.js' %}"></script>
+            <script src="{% static 'ikfwebapp/vendor/daterangepicker/daterangepicker.js' %}"></script>
+        <!--===============================================================================================-->
+            <script src="{% static 'ikfwebapp/vendor/countdowntime/countdowntime.js' %}"></script>
+        <!--===============================================================================================-->
+        <script src="{% static 'ikfwebapp/js/main.js' %}"></script>
+        <script src="{% static 'ikfwebapp/js/script.js' %}"></script>
+        {% endblock footer_javascript_site %}
+        {% block footer_javascript_section %}{% endblock footer_javascript_section %}
+        {% block footer_javascript_page %}{% endblock footer_javascript_page %}
+        {% endblock footer_javascript %}
+        
+    </body>
+</html>
+

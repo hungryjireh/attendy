@@ -1,0 +1,26 @@
+<!-- templates/linksfields.html -->
+{% extends 'base.html' %}
+
+{% block title %}My Profile Links | SMESH{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="links">
+            <div class="links-form">
+                <h2 class="links-header">My Profile Links</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="links">
+            <div class="links-form">
+                <h2 class="links-header">Please log in!</h2>
+                <a href="{% url 'login' %}">Login</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

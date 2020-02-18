@@ -1,0 +1,18 @@
+#header {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 50px;
+}
+
+.upload-form {
+    text-align: center;
+}
+
+#submit-button {
+    margin-top: 30px;
+}
+
+#file-upload {
+    margin-top: 30px;
+    margin-left: 100px;
+}

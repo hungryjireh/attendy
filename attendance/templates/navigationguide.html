@@ -1,0 +1,52 @@
+<!-- templates/navigationguide.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home | Attendy{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="navigationguide"> 
+        <h2 class="links-header">Attendance Form for {{ date }}</h2>
+        {% if status_message %}
+            <p>{{ status_message }}</p>
+        {% endif %}
+        {% if classroom_key %}
+            <p>Username: {{ classroom_key }}</p>
+        {% endif %}
+        {% if classroom_password %}
+            <p>Password: {{ classroom_password }}</p>
+        {% endif %}
+        <form class="attendance-form" method="post">
+            {% csrf_token %}
+            {% if objectlist %}
+                <p>
+                   <label for="id_name">Name:</label>
+                   <select name="name" required id="id_name">
+                        <option value selected>----------</option>
+                        {% for element in objectlist %}
+                        <option value="{{ element.saved_name }}">{{ element.name }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+            {% endif %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+{% else %}
+    <div class="home-no-login">
+        <div class="after"></div>
+        <h1 class="welcome-header">Attendy</h1>
+        <img class="welcome-image" src="{% static 'ikfwebapp/images/display.jpg' %}">
+        <p class="welcome-subtext">Accurate, ungameable attendance.</p>
+        <form method="post">
+            {% csrf_token %}
+            <button class="welcome-button" type="submit" id="new-class" name="new-class">
+                <span class="ui-button-text">Generate New Class</span>
+            </button>
+        </form>
+        <!-- <button class="welcome-button" onclick="location.href='/admin'">Login</button> -->
+    </div>
+{% endif %}
+{% endblock %}

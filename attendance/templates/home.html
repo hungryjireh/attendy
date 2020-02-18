@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}Home | SMESH{% endblock title %}
+
+{% block content %}
+<div class="home">
+    <h2 class="home-header">{{ username }}'s Profile</h2>
+    {% if user.is_authenticated and user.username != username %}
+    <div class="connections-button">
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" id="add-contact" name="add-contact">
+                <span class="ui-button-text">{{ button_text }}</span>
+            </button>
+        </form>
+    </div>
+    {% elif user.is_authenticated and user.username == username %}
+    <div class="connections-button">
+        <form method="post">
+            {% csrf_token %}
+            {% if link_choice == 1 %}
+                <p class="profile-label">Profile 1</p>
+                <p class="profile-sublabel">Anyone who accesses your profile will see these links.</p>
+                <button type="submit" id="change-profile" name="change-profile">
+                    <span class="ui-button-text">Change to Profile 2</span>
+                </button>
+            {% elif link_choice == 2 %}
+                <p class="profile-label">Profile 2</p>
+                <p class="profile-sublabel">Anyone who accesses your profile will see these links.</p>
+                <button type="submit" id="change-profile" name="change-profile">
+                    <span class="ui-button-text">Change to Profile 1</span>
+                </button>
+            {% endif %}
+        </form>
+    </div>
+    {% endif %}
+    <div class="row social-icons-row">
+        {% load static %}
+        {% if facebook_link %}
+        <div class="col-sm-4 social-icons">
+            <a href="{{ facebook_link }}"><img src="{% static 'ikfwebapp/images/icons/facebook.png' %}" /></a>
+            <h3 class="social-icons-text">Facebook</h3>
+        </div>
+        {% endif %}
+        {% if linkedin_link %}
+        <div class="col-sm-4 social-icons">
+            <a href="{{ linkedin_link }}"><img src="{% static 'ikfwebapp/images/icons/linkedin.png' %}" /></a>
+            <h3 class="social-icons-text">LinkedIn</h3>
+        </div>
+        {% endif %}
+        {% if twitter_link %}
+        <div class="col-sm-4 social-icons">
+            <a href="{{ twitter_link }}"><img src="{% static 'ikfwebapp/images/icons/twitter.png' %}" /></a>
+            <h3 class="social-icons-text">Twitter</h3>
+        </div>
+        {% endif %}
+        {% if instagram_link %}
+        <div class="col-sm-4 social-icons">
+            <a href="{{ instagram_link }}"><img src="{% static 'ikfwebapp/images/icons/instagram.png' %}" /></a>
+            <h3 class="social-icons-text">Instagram</h3>
+        </div>
+        {% endif %}
+        {% if pinterest_link %}
+        <div class="col-sm-4 social-icons">
+            <a href="{{ pinterest_link }}"><img src="{% static 'ikfwebapp/images/icons/pinterest.png' %}" /></a>
+            <h3 class="social-icons-text">Pinterest</h3>
+        </div>
+        {% endif %}
+        {% if github_link %}
+        <div class="col-sm-4 social-icons">
+            <a href="{{ github_link }}"><img src="{% static 'ikfwebapp/images/icons/github.png' %}" /></a>
+            <h3 class="social-icons-text">Github</h3>
+        </div>
+        {% endif %}
+        {% if phone_number %}
+        <div class="col-sm-4 social-icons">
+            <a href="{{ phone_number }}"><img src="{% static 'ikfwebapp/images/icons/whatsapp.png' %}" /></a>
+            <h3 class="social-icons-text">Whatsapp</h3>
+        </div>
+        {% endif %}
+        {% if portfolio_link %}
+        <div class="col-sm-4 social-icons">
+            <a href="{{ portfolio_link }}"><img src="{% static 'ikfwebapp/images/icons/portfolio.png' %}" /></a>
+            <h3 class="social-icons-text">Portfolio</h3>
+        </div>
+        {% endif %}
+        {% if resume_link %}
+        <div class="col-sm-4 social-icons">
+            <a href="{{ resume_link }}"><img src="{% static 'ikfwebapp/images/icons/resume.png' %}" /></a>
+            <h3 class="social-icons-text">Resume</h3>
+        </div>
+        {% endif %}
+        {% if email_address %}
+        <div class="col-sm-4 social-icons">
+            <a href="mailto:{{ email_address }}"><img src="{% static 'ikfwebapp/images/icons/email.png' %}" /></a>
+            <h3 class="social-icons-text">Email Address</h3>
+        </div>
+        {% endif %}
+    </div>
+    <div class="interactionnotes-row">
+        {% if interactionnotes_form %}
+            <h2 class="generate-qrcode-header">Interaction Notes</h2>
+            <p class="generate-qrcode-label">Never forget a meeting with someone again! Write down your key memories of this meeting here.</p>
+            <form method="post" class="interactionnotes-form">
+                {% csrf_token %}
+                <p>{{ interactionnotes_form.interaction_notes }}</p>
+                <button type="submit" id="interaction-notes" name="interaction-notes">
+                    <span class="ui-button-text">Save Notes</span>
+                </button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

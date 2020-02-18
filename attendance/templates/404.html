@@ -1,0 +1,22 @@
+<!-- templates/404.html -->
+{% extends 'base.html' %}
+
+{% block title %}Error 404 | SMESH{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="links">
+    <div class="links-form">
+        <h2 class="links-header">Error 404</h2>
+        <p>Please try again!</p>
+    </div>
+</div>
+{% else %}
+<div class="links">
+    <div class="links-form">
+        <h2 class="links-header">Please log in!</h2>
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

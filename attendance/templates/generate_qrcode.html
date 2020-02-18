@@ -1,0 +1,46 @@
+<!-- templates/linksfields.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Generate QR Code | SMESH{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="generate-qrcode">
+            <div class="generate-qrcode-form">
+                <h2 class="generate-qrcode-header">Generate QR Code</h2>
+                <p class="generate-qrcode-label">Upload any image and have your digital business card embedded as a QR code on it!</p>
+                <form action="" method="POST" enctype="multipart/form-data" class="qrcode-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <div class="download-image-div">
+                {% if qrcode_link %}
+                    <a class="download-image-link" href="{{ qrcode_link }}">Download My Image</a>
+                {% endif %}
+            </div>
+            <div class="row">
+                
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4">
+                    <p class="generate-qrcode-photo-label">Upload any image</p>
+                    <img class="img-fluid" src="{% static 'ikfwebapp/images/businessman.jpg' %}" />
+                </div>
+                <div class="col-sm-4">
+                    <p class="generate-qrcode-photo-label">... and it's now a business card!</p>
+                    <img class="img-fluid" src="{% static 'ikfwebapp/images/businessman_qrcode.jpg' %}" />
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+        </div>
+    {% else %}
+        <div class="links">
+            <div class="links-form">
+                <h2 class="links-header">Please log in!</h2>
+                <a href="{% url 'login' %}">Login</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

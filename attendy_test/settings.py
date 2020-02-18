@@ -129,6 +129,9 @@ MEDIA_URL = '/photos/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'

@@ -108,10 +108,9 @@ def download_csv_page(request):
         classroom = User.objects.get(username=name_field)
         return download_csv(classroom)
 
-@staff_member_required
 def download_csv(classroom):
     response = HttpResponse(content_type='text/csv')
-    filename = str(classroom) + ".csv"
+    filename = str(classroom.username) + "_export.csv"
     response['Content-Disposition'] = 'attachment; filename="{0}"'.format(filename)
     writer = csv.writer(
         response,

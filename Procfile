@@ -1,1 +1,1 @@
-web: gunicorn attendy.wsgi --log-file -
+web: gunicorn attendy_test.wsgi --log-file -

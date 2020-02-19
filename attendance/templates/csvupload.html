@@ -16,12 +16,23 @@
                     <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
                 </div>                    
             </div>
-            <div class="form-group">                    
-                <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
-                     <button class="btn btn-primary"> <span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
-                </div> 
-            </div>
+            <button type="submit">Submit</button>
         </form>
+        <div class="sample-table-section">
+            <h4 class="upload-header">Sample table</h2>
+            <p>Ensure that uploaded .csv file has no headers.</p>
+            <p>Currently only supports name and email address fields.</p>
+            <table class="centre-table">
+                <tr class="demo_upload_row">
+                    <td class="demo_upload_row">Jackson Smith</td>
+                    <td class="demo_upload_row">jackson@berkeley.edu</td>
+                </tr>
+                <tr class="demo_upload_row">
+                    <td class="demo_upload_row">Harley Smith</td>
+                    <td class="demo_upload_row">harley@berkeley.edu</td>
+                </tr>
+            </table>
+        </div>
     </div>
 {% else %}
     <div class="navigationguide"> 

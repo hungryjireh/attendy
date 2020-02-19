@@ -6,6 +6,11 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+    {% if user.is_staff %}
+    <div class="navigationguide"> 
+        <a href="create-class" class="button">Create New Class</a>
+    </div>
+    {% else %}
     <div class="navigationguide"> 
         <h2 class="links-header">Attendance Form for {{ date }}</h2>
         {% if status_message %}
@@ -34,6 +39,7 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+    {% endif %}
 {% else %}
     <div class="home-no-login">
         <div class="after"></div>

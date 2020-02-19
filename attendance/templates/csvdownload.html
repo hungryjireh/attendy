@@ -8,6 +8,7 @@
 {% if user.is_authenticated %}
     <div class="navigationguide"> 
         <h2 class="links-header">Download Attendance Form</h2>
+        <p>Download attendance form to be submitted to UCB here.</p>
         <form method="POST" enctype="multipart/form-data" class="form-horizontal"> 
             {% csrf_token %}
             {% if query_list %}
@@ -20,8 +21,16 @@
                         {% endfor %}
                     </select>
                 </p>
+                <!-- <p>
+                    <label for="id_attendancedate">Attendance Date:</label>
+                    <input type="date" id="attendancedate" name="attendancedate" value="2020-01-01">
+                </p> -->
+                <p>
+                    <label for="id_latetime">Late time:</label>
+                    <input type="time" id="latetime" name="latetime" step="60" value="13:41" required>
+                </p>
+                <button type="submit">Submit</button>
             {% endif %}
-            <button type="submit">Submit</button>
         </form>
     </div>
 {% else %}

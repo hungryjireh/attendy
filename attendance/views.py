@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.messages import constants as messages
 from django.shortcuts import redirect, render
+from django.utils.timezone import localtime
 from rest_framework import viewsets, filters, status, generics
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -33,9 +34,14 @@ def attendance_page(request):
             return render(request, 'navigationguide.html', {'objectlist': objectlist, 'date': date})
     else:
         name_field = request.POST.get('name')
-        attendance_list = AttendanceFormat.objects.create(classroom=request.user, name=name_field)
-        attendance_list.save()   
-        return render(request, 'navigationguide.html', {'date': date, 'status_message': "✓ Attendance submitted successfully!"})
+        try:
+            attendance_list = AttendanceFormat.objects.get(classroom=request.user, name=name_field)
+            status_message = "✗ Attendance already submitted for " + str(request.user.username) + "!"
+            return render(request, 'navigationguide.html', {'date': date, 'status_message': status_message})
+        except:
+            attendance_list = AttendanceFormat.objects.create(classroom=request.user, name=name_field)
+            attendance_list.save()   
+            return render(request, 'navigationguide.html', {'date': date, 'status_message': "✓ Attendance submitted successfully!"})
         # gateways = netifaces.gateways()
         # default_gateway = gateways['default'][netifaces.AF_INET][0]
         # if default_gateway == SF_DEFAULT_GATEWAY:
@@ -104,14 +110,14 @@ def download_csv_page(request):
     if request.method == 'GET':
         query = User.objects.all()
         query_list = [item for item in query if item.username != "jireh"]
-        print(query_list)
         return render(request, 'csvdownload.html', {'query_list': query_list})
     else:
         name_field = request.POST.get('username')
+        latetime_field = request.POST.get('latetime')
         classroom = User.objects.get(username=name_field)
-        return download_csv(classroom)
+        return download_csv(classroom, latetime_field)
 
-def download_csv(classroom):
+def download_csv(classroom, latetime):
     response = HttpResponse(content_type='text/csv')
     filename = str(classroom.username) + "_export.csv"
     response['Content-Disposition'] = 'attachment; filename="{0}"'.format(filename)
@@ -121,10 +127,27 @@ def download_csv(classroom):
         quotechar='"',
         quoting=csv.QUOTE_ALL
     )
-    query = AttendanceFormat.objects.filter(classroom=classroom).values('name')
+    query = AttendanceFormat.objects.filter(classroom=classroom).values('name', 'datetime')
     query_list = [item['name'] for item in list(query)]
-    for f in NominalRoll.objects.filter(saved_name__in=query_list):
-        writer.writerow([f.datetime, f.name, f.email])
+    datetime_list = [localtime(item['datetime']) for item in list(query)]
+    latetime = datetime.strptime(latetime, '%H:%M').time()
+    date_field = classroom.date_joined.date()
+    islate_list = []
+    for item in datetime_list:
+        if item.date() == date_field:
+            if item.time() < latetime:
+                islate_list.append(False)
+            else:
+                islate_list.append(True)
+        else:
+            islate_list.append(True)
+    nominal_roll = NominalRoll.objects.filter(saved_name__in=query_list)
+    writer.writerow(['Date', 'Name', 'Email', 'Is Late', 'Is Present'])
+    for i in range(len(islate_list)):
+        f = nominal_roll[i]
+        writer.writerow([datetime_list[i], f.name, f.email, islate_list[i], True])
+    for f in NominalRoll.objects.exclude(saved_name__in=query_list):
+        writer.writerow(['N/A', f.name, f.email, 'N/A', False])
     return response
 
 class UserViewSet(viewsets.ModelViewSet):

@@ -878,10 +878,6 @@ body {
 }
 
 /* UPLOAD FORM PAGE */
-.upload-form {
-    margin-top: 20px;
-    text-align: center;
-}
 
 .upload-form-fields {
     margin-bottom: 250px;
@@ -1138,4 +1134,12 @@ input:checked + .slider:before {
     margin-top: 50px;
     margin-left: 150px;
     margin-right: 150px;
+}
+
+.sample-table-section {
+    margin: 100px;
+}
+
+.new-class {
+    margin-top: 500px;
 }
